@@ -3,6 +3,7 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-kapt'
 apply plugin: 'kotlin-parcelize'
 apply plugin: 'org.jetbrains.kotlin.plugin.compose'
+apply plugin: 'io.gitlab.arturbosch.detekt'
 
 android {
     namespace = "com.picpay.desafio.android"
@@ -45,6 +46,26 @@ android {
     kapt {
         correctErrorTypes true
     }
+
+    lint {
+        abortOnError = false
+        warningsAsErrors = true
+        checkReleaseBuilds = false
+        disable.add("UnusedResources")
+        enable.add("ObsoleteSdkInt")
+        lintConfig = file("lint.xml")
+    }
+}
+
+detekt {
+    config = files("$rootDir/config/detekt/detekt.yml")
+    buildUponDefaultConfig = true
+    allRules = false
+    autoCorrect = true
+}
+
+tasks.named("check") {
+    dependsOn("detekt")
 }
 
 dependencies {
@@ -98,7 +119,6 @@ dependencies {
     debugImplementation("androidx.compose.ui:ui-tooling")
     androidTestImplementation("androidx.compose.ui:ui-test-junit4")
     debugImplementation("androidx.compose.ui:ui-test-manifest")
-    implementation("androidx.activity:activity-compose:1.10.0")
     implementation("androidx.lifecycle:lifecycle-viewmodel-compose:$lifecycle_viewmodel_compose_version")
     implementation("androidx.compose.runtime:runtime-livedata")
     implementation("androidx.compose.runtime:runtime-rxjava2")

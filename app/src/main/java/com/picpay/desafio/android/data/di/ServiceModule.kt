@@ -9,7 +9,7 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 object ServiceModule {
-    fun getModule() = serviceModule
+    fun getModule() = service
 
     private inline fun <reified T> createService(
         client: OkHttpClient,
@@ -21,10 +21,11 @@ object ServiceModule {
             GsonConverterFactory.create(
                 converterFactory
             )
-        ).build()
+        )
+        .build()
         .create(T::class.java)
 
-    private val serviceModule = module {
+    private val service = module {
         single<ContactsService> { createService(get(), get()) }
     }
 }

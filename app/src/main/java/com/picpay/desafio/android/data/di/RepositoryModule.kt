@@ -5,9 +5,9 @@ import com.picpay.desafio.android.domain.features.contacts.repository.ContactsRe
 import org.koin.dsl.module
 
 object RepositoryModule {
-    fun getModule() = repositoryModule
+    fun getModule() = repository
 
-    private val repositoryModule = module {
+    private val repository = module {
         single<ContactsRepository> {
             ContactsRepositoryImpl(
                 service = get(),

@@ -5,9 +5,9 @@ import org.koin.android.ext.koin.androidContext
 import org.koin.dsl.module
 
 object DaoModule {
-    fun getModule() = daoModule
+    fun getModule() = dao
 
-    private val daoModule = module {
+    private val dao = module {
         single { ContactDatabase.getInstance(androidContext()).dao }
     }
 }

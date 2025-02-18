@@ -51,7 +51,7 @@ fun ContactComposable(
             model = ImageRequest.Builder(LocalContext.current)
                 .data(contact.image)
                 .memoryCachePolicy(CachePolicy.ENABLED)
-                .transformations(RoundedCornersTransformation(16f))
+                .transformations(RoundedCornersTransformation(radius = 16f))
                 .build(),
             placeholder = painterResource(R.drawable.ic_round_account_circle),
             contentDescription = stringResource(R.string.image_profile_description),
