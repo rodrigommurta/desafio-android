@@ -1,0 +1,32 @@
+name: AndroidBuild
+on:
+  push:
+    branches: [ '**' ]
+
+jobs :
+  build :
+    runs-on : ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4.2.2
+
+      - name: Setup Java JDK
+        uses: actions/setup-java@v4.5.0
+        with:
+          java-version: '17'
+          distribution: 'zulu'
+
+      - name: Run Lint
+        run: ./gradlew lint
+
+      - name: Run Detekt
+        run: ./gradlew detekt
+
+      - name: Build with Gradle
+        run: ./gradlew build
+
+      - name: Upload a Build Artifact
+        uses: actions/upload-artifact@v4.4.3
+        with:
+          name: GitHubRepositories.apk
+          path: modules/app/build/outputs/apk/debug/app-debug.apk
