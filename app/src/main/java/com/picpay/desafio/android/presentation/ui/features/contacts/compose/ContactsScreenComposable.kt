@@ -24,11 +24,11 @@ import com.picpay.desafio.android.presentation.ui.features.contacts.DummyContact
 import com.picpay.desafio.android.presentation.ui.features.contacts.compose.fakedata.ContactsScreenFakeData
 import com.picpay.desafio.android.presentation.ui.utils.compose.ScreenComposable
 
-const val ERROR_TAG = "error"
-const val LOADING_TAG = "loading"
-const val SUCCESS_TAG = "success"
-const val LOADING_IMAGE_TAG = "loading_image"
-const val CACHE_TAG = "cache_tag"
+internal const val ERROR_TAG = "error"
+internal const val LOADING_TAG = "loading"
+internal const val SUCCESS_TAG = "success"
+internal const val LOADING_IMAGE_TAG = "loading_image"
+internal const val CACHE_TAG = "cache_tag"
 
 @Composable
 fun ContactsScreenComposable(

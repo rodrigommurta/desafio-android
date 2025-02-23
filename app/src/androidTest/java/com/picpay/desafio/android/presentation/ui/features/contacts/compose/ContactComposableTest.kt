@@ -14,19 +14,24 @@ class ContactComposableTest {
     val composeTestRule = createComposeRule()
 
     @Test
-    fun contactComposableTest() {
+    fun assert_contact_properties_are_displayed_correctly() {
+        // Given
+        val contact = Contact(
+            id = 1,
+            name = "Rodrigo Murta",
+            username = "rodrigo.mmurta",
+            image = "https://randomuser.me/api/portraits/men/1.jpg"
+        )
+
+        // When
         composeTestRule.setContent {
             ContactComposable(
                 modifier = Modifier,
-                contact = Contact(
-                    id = 1,
-                    name = "Rodrigo Murta",
-                    username = "rodrigo.mmurta",
-                    image = "https://randomuser.me/api/portraits/men/1.jpg"
-                )
+                contact = contact
             )
         }
 
+        // Then
         composeTestRule.onNodeWithTag(IMAGE_TAG)
             .assertIsDisplayed()
 
@@ -37,6 +42,5 @@ class ContactComposableTest {
         composeTestRule.onNodeWithTag(NAME_TAG)
             .assertIsDisplayed()
             .assertTextEquals("Rodrigo Murta")
-
     }
 }

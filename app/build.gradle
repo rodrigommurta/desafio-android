@@ -1,15 +1,18 @@
-apply plugin: 'com.android.application'
-apply plugin: 'kotlin-android'
-apply plugin: 'kotlin-kapt'
-apply plugin: 'kotlin-parcelize'
-apply plugin: 'org.jetbrains.kotlin.plugin.compose'
-apply plugin: 'io.gitlab.arturbosch.detekt'
+plugins {
+    id('com.android.application')
+    id('kotlin-android')
+    id('kotlin-kapt')
+    id('kotlin-parcelize')
+    id('org.jetbrains.kotlin.plugin.compose')
+    id('io.gitlab.arturbosch.detekt')
+}
 
 android {
     namespace = "com.picpay.desafio.android"
-    compileSdk 34
+
     defaultConfig {
         applicationId "com.picpay.desafio.android"
+        compileSdk 34
         minSdkVersion 24
         targetSdkVersion 34
         versionCode 1
@@ -19,6 +22,7 @@ android {
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
+
     buildTypes {
         debug {}
 
@@ -39,12 +43,15 @@ android {
     }
 
     buildFeatures {
-        dataBinding true
-        viewBinding true
         compose true
     }
+
     kapt {
         correctErrorTypes true
+
+        arguments {
+            arg("room.schemaLocation", "$projectDir/schemas".toString())
+        }
     }
 
     lint {
@@ -54,6 +61,14 @@ android {
         disable.add("UnusedResources")
         enable.add("ObsoleteSdkInt")
         lintConfig = file("lint.xml")
+    }
+
+    packagingOptions {
+        resources {
+            excludes += "/META-INF/{AL2.0,LGPL2.1}"
+            merges += "META-INF/LICENSE.md"
+            merges += "META-INF/LICENSE-notice.md"
+        }
     }
 }
 
@@ -111,6 +126,7 @@ dependencies {
     testImplementation "junit:junit:$junit_version"
     testImplementation "androidx.arch.core:core-testing:$core_testing_version"
     testImplementation("io.mockk:mockk:$mockk_version")
+    androidTestImplementation("io.mockk:mockk-android:$mockk_version")
 
     implementation(platform("androidx.compose:compose-bom:$compose_version"))
     androidTestImplementation(platform("androidx.compose:compose-bom:$compose_version"))
