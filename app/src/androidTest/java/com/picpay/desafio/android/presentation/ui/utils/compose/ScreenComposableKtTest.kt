@@ -42,7 +42,7 @@ class ScreenComposableTest {
     @Test
     fun screenComposable_should_display_loading_content_when_state_is_Loading() {
         // Given
-        val state = State.Loading<Any>()
+        val state = State.Loading
 
         // When
         setCompose(state)
@@ -59,7 +59,7 @@ class ScreenComposableTest {
     @Test
     fun screenComposable_should_display_error_content_when_state_is_Error() {
         // Given
-        val state = State.Error<Any>(
+        val state = State.Error(
             error = ErrorInformation(
                 message = "Ocorreu um erro, tente novamente."
             )

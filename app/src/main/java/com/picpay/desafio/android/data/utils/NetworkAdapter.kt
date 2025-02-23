@@ -18,7 +18,7 @@ inline fun <Result, Request> networkAdapter(
         data = query().first()
 
     } catch (error: Exception) {
-        if (data == emptyList<Result>() || data != null) {
+        if (data != emptyList<Result>() && data != null) {
             emit(
                 State.ErrorWithCache(
                     data,

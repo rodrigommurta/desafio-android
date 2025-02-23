@@ -6,7 +6,7 @@ import com.picpay.desafio.android.domain.utils.StateBearer
 import java.io.Serializable
 
 data class ContactsScreen(
-    override val state: State<Any> = State.Loading(),
+    override val state: State<Any> = State.Loading,
     val contacts: List<Contact>? = null
 ) : Serializable, StateBearer
 

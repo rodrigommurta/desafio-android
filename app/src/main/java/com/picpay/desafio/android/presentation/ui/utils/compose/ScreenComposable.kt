@@ -1,5 +1,6 @@
 package com.picpay.desafio.android.presentation.ui.utils.compose
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -23,7 +24,7 @@ import com.picpay.desafio.android.presentation.ui.utils.FeedbackListener
 
 @Composable
 fun ScreenComposable(
-    screenState: State<Any> = State.Loading(),
+    screenState: State<Any> = State.Loading,
     listener: FeedbackListener,
     toolbar: @Composable () -> Unit,
     loadingContent: @Composable () -> Unit = {
@@ -47,7 +48,7 @@ fun ScreenComposable(
         Column(modifier = Modifier.padding(paddingValues)) {
             toolbar()
 
-            val errorWithoutCache = screenState.isError
+            val errorWithoutCache = screenState is State.Error
 
             if (errorWithoutCache) {
                 errorContent()
@@ -62,7 +63,8 @@ fun ScreenComposable(
                                 start = 24.dp,
                                 end = 24.dp,
                             )
-                            .testTag(CACHE_TAG),
+                            .testTag(CACHE_TAG)
+                            .clickable { listener.onButtonClicked() },
                         error = errorWithCache.error
                     )
                 }

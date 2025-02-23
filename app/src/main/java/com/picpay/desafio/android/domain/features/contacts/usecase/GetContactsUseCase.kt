@@ -5,7 +5,7 @@ import com.picpay.desafio.android.domain.features.contacts.repository.ContactsRe
 import com.picpay.desafio.android.domain.utils.State
 import com.picpay.desafio.android.domain.utils.UseCase
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.firstOrNull
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flow
 
 class GetContactsUseCase(
@@ -15,9 +15,9 @@ class GetContactsUseCase(
         param: String,
         currentState: ContactsScreen,
     ): Flow<ContactsScreen> = flow {
-        emit(currentState.copy(state = State.Loading()))
+        emit(currentState.copy(state = State.Loading))
 
-        when (val result = repository.getContacts(param).firstOrNull()) {
+        when (val result = repository.getContacts(param).first()) {
             is State.Success -> {
                 emit(
                     currentState.copy(
@@ -45,7 +45,7 @@ class GetContactsUseCase(
             }
 
             else -> {
-                emit(currentState.copy(state = State.Loading()))
+                emit(currentState.copy(state = State.Loading))
             }
         }
     }

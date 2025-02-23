@@ -25,7 +25,7 @@ class ContactsScreenFakeData : PreviewParameterProvider<ContactsScreen> {
         contacts = listContacts(size = 10)
     )
 
-    private val loadingScreen = successScreen.copy(state = State.Loading())
+    private val loadingScreen = successScreen.copy(state = State.Loading)
 
     private val errorWithCacheScreen = successScreen.copy(
         state = State.ErrorWithCache(

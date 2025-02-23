@@ -1,37 +1,18 @@
 package com.picpay.desafio.android.domain.utils
 
-import android.content.res.Resources
-import com.picpay.desafio.android.R
+sealed class State<out T> {
+    data object Loading : State<Nothing>()
 
-sealed class State<T>(
-    open val data: T? = null,
-    open val error: ErrorInformation? = null,
-) {
-    data class Loading<T>(
-        override val data: T? = null,
-        override val error: ErrorInformation? = null,
-    ) : State<T>()
+    data class Success<T>(val data: T) : State<T>()
 
-    data class Success<T>(override val data: T?) : State<T>(data = data)
-
-    data class Error<T>(
-        override val data: T? = null,
-        override val error: ErrorInformation,
-    ) : State<T>(null, error)
+    data class Error(val error: ErrorInformation) : State<Nothing>()
 
     data class ErrorWithCache<T>(
-        override val data: T? = null,
-        override val error: ErrorInformation,
-    ) : State<T>(null, error)
-
-    val isLoading get() = this is Loading
-    val isNotLoading get() = isLoading.not()
-    val isSuccess get() = this is Success
-    val isNotSuccess get() = isSuccess.not()
-    val isError get() = this is Error
-    val isNotError get() = isError.not()
-    val isErrorWithCache get() = this is ErrorWithCache
-    val isNotErrorWithCache get() = isErrorWithCache.not()
+        val data: T? = null,
+        val error: ErrorInformation = ErrorInformation(
+            "Não foi possível conectar ao servidor. Exibindo dados em cache."
+        ),
+    ) : State<T>()
 }
 
 data class ErrorInformation(
@@ -42,8 +23,8 @@ data class ErrorInformation(
 fun Exception.toErrorInformation(message: String? = null) = ErrorInformation(
     message = message
         ?: localizedMessage
-        ?: Resources.getSystem().getString(R.string.error),
-    cause = cause
+        ?: "Ocorreu um erro. Tente novamente.",
+    cause = this
 )
 
 interface StateBearer {
